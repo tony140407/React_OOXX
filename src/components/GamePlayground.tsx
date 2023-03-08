@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Block from '@/components/Block'
 import { Player } from 'types/player.d'
 
@@ -7,6 +7,16 @@ type BlockValue = string | null
 const GamePlayGround = ({ gainOneScore }: { gainOneScore: (winner: Player) => void }) => {
     const [blocks, setBlocks] = useState<Array<BlockValue>>(Array(9).fill(null))
     const [currentPlayer, setCurrentPlayer] = useState<string>(Player.player1)
+    const [winLines, setWinLines] = useState([
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ])
 
     const handleClick = (index: number) => {
         if (blocks[index] !== null) return
@@ -18,22 +28,14 @@ const GamePlayGround = ({ gainOneScore }: { gainOneScore: (winner: Player) => vo
 
     useEffect(() => {
         const checkWinner = () => {
-            const winLines = [
-                [0, 1, 2],
-                [3, 4, 5],
-                [6, 7, 8],
-                [0, 3, 6],
-                [1, 4, 7],
-                [2, 5, 8],
-                [0, 4, 8],
-                [2, 4, 6],
-            ]
             for (let i = 0; i < winLines.length; i++) {
                 const [a, b, c] = winLines[i]
                 if (blocks[a] && blocks[a] === blocks[b] && blocks[a] === blocks[c]) {
-                    console.log(blocks[a])
-                    console.log(`Winner is ${blocks[a]}`)
+                    const updatedWinLines = [...winLines]
+                    updatedWinLines.splice(i, 1)
+                    setWinLines(updatedWinLines)
                     gainOneScore(blocks[a] as Player)
+                    break
                 }
             }
         }
