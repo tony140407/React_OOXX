@@ -3,8 +3,11 @@ import Block from '@/components/Block'
 import { Player } from 'types/player.d'
 
 type BlockValue = string | null
-
-const GamePlayGround = ({ gainOneScore }: { gainOneScore: (winner: Player) => void }) => {
+interface GamePlayGroundProps {
+    gainOneScore: (winner: Player) => void
+    isPause: boolean
+}
+const GamePlayGround = ({ gainOneScore, isPause }: GamePlayGroundProps) => {
     const [blocks, setBlocks] = useState<Array<BlockValue>>(Array(9).fill(null))
     const [currentPlayer, setCurrentPlayer] = useState<string>(Player.player1)
     const [winLines, setWinLines] = useState([
@@ -43,10 +46,25 @@ const GamePlayGround = ({ gainOneScore }: { gainOneScore: (winner: Player) => vo
     }, [blocks])
 
     return (
-        <section w='100%' h='100%' grid='~ rows-3 cols-3 gap-5px' bg='gray-700' m='x-auto'>
+        <section
+            relative='~'
+            w='100%'
+            h='100%'
+            grid='~ rows-3 cols-3 gap-5px'
+            bg='gray-700'
+            m='x-auto'
+        >
             {blocks.map((value, i) => (
                 <Block key={i} value={value} clickFn={() => handleClick(i)} />
             ))}
+            {/* a mask when isPause===true show */}
+            <div
+                w='100%'
+                h='100%'
+                bg='gray-500/50'
+                className='absolute top-0 left-0'
+                style={{ display: isPause === true ? 'block' : 'none' }}
+            ></div>
         </section>
     )
 }

@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GamePlayGround from '../components/GamePlayground'
 import { Player } from 'types/player.d'
 
 const Mode1 = () => {
+    const winningCondition = 1
     const [score, setScore] = useState<{ X: number; O: number }>({ X: 0, O: 0 })
+    const [isPause, setIsPause] = useState<boolean>(false)
     function gainOneScore(winner: Player) {
         setScore((prev) => ({ ...prev, [winner]: prev[winner] + 1 }))
     }
+    useEffect(() => {
+        if (winningCondition === score.X || winningCondition === score.O) {
+            setIsPause(true)
+        }
+    }, [score])
     return (
         <div w='90vh' h='90vh' m='x-auto'>
             <h2>
                 {score.O} : {score.X}
             </h2>
-            <GamePlayGround gainOneScore={(winner) => gainOneScore(winner)} />
+            <GamePlayGround isPause={isPause} gainOneScore={(winner) => gainOneScore(winner)} />
         </div>
     )
 }
