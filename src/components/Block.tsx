@@ -1,7 +1,5 @@
-import React from 'react'
 import { Player } from 'types/player.d'
 
-// if value is true, means the block is O
 interface BlockProps {
     value: null | string
     clickFn: () => void
