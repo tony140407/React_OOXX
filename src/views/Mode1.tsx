@@ -4,7 +4,7 @@ import { Player } from 'types/player.d'
 
 const Mode1 = () => {
     const winningCondition = 1
-    const [score, setScore] = useState<{ X: number; O: number }>({ X: 0, O: 0 })
+    const [score, setScore] = useState<{ [value in Player]: number }>({ O: 0, X: 0 })
     const [isPause, setIsPause] = useState<boolean>(false)
     function gainOneScore(winner: Player) {
         setScore((prev) => ({ ...prev, [winner]: prev[winner] + 1 }))
