@@ -55,7 +55,12 @@ const GamePlayGround = ({ gainOneScore, isPause }: GamePlayGroundProps) => {
             m='x-auto'
         >
             {blocks.map((value, i) => (
-                <Block key={i} value={value} clickFn={() => handleClick(i)} />
+                <Block
+                    key={i}
+                    value={value}
+                    clickFn={() => handleClick(i)}
+                    dataSet={`block_${i}`}
+                />
             ))}
             {/* a mask when isPause===true show */}
             <div
