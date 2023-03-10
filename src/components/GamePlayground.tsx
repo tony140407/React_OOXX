@@ -69,6 +69,7 @@ const GamePlayGround = ({ gainOneScore, isPause }: GamePlayGroundProps) => {
                 bg='gray-500/50'
                 className='absolute top-0 left-0'
                 style={{ display: isPause === true ? 'block' : 'none' }}
+                data-testid='mask'
             ></div>
         </section>
     )

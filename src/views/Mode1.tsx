@@ -16,7 +16,7 @@ const Mode1 = () => {
     }, [score])
     return (
         <div w='90vh' h='90vh' m='x-auto'>
-            <h2>
+            <h2 data-testid='playerScore'>
                 {score.O} : {score.X}
             </h2>
             <GamePlayGround isPause={isPause} gainOneScore={(winner) => gainOneScore(winner)} />
