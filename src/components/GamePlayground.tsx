@@ -50,7 +50,7 @@ const GamePlayGround = ({ gainOneScore, isPause }: GamePlayGroundProps) => {
             relative='~'
             w='100%'
             h='100%'
-            grid='~ rows-3 cols-3 gap-5px'
+            grid='~ rows-3 cols-3 gap-2px'
             bg='gray-700'
             m='x-auto'
         >
