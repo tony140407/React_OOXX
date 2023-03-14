@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import GamePlayGround from '../components/GamePlayground'
 import { Player } from 'types/player.d'
+import type { RootState } from '@/store/store'
+import { useSelector, useDispatch } from 'react-redux'
+import { changePlayer } from '@/store/mode2'
 
 const Mode2 = () => {
     const winningCondition = 5
+    const player = useSelector((state: RootState) => state.mode2.player)
+    const dispatch = useDispatch()
     const [score, setScore] = useState<{ [value in Player]: number }>({ O: 0, X: 0 })
     const [currentPlayGround, setCurrentPlayGround] = useState<number>(4)
 
@@ -12,6 +17,7 @@ const Mode2 = () => {
     }
     const handleBlockClick = (blockId: number) => {
         setCurrentPlayGround(blockId)
+        dispatch(changePlayer())
     }
     useEffect(() => {
         if (winningCondition === score.X || winningCondition === score.O) {
@@ -38,6 +44,7 @@ const Mode2 = () => {
                         isPause={currentPlayGround !== i}
                         gainOneScore={(winner: Player) => gainOneScore(winner)}
                         onBlockClick={(blockIndex: number) => handleBlockClick(blockIndex)}
+                        player={currentPlayGround === i ? player : undefined}
                     />
                 ))}
             </section>

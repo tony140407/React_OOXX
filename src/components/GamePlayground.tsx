@@ -8,8 +8,10 @@ interface GamePlayGroundProps {
     isPause: boolean
     // 取得被點擊的區塊
     onBlockClick?: (blockIndex: number) => void
+    // player 有兩種模式，自動指派或是由外部指派
+    player?: Player
 }
-const GamePlayGround = ({ gainOneScore, isPause, onBlockClick }: GamePlayGroundProps) => {
+const GamePlayGround = ({ gainOneScore, isPause, onBlockClick, player }: GamePlayGroundProps) => {
     const [blocks, setBlocks] = useState<Array<BlockValue>>(Array(9).fill(null))
     const [currentPlayer, setCurrentPlayer] = useState<string>(Player.player1)
     const [winLines, setWinLines] = useState([
@@ -27,11 +29,19 @@ const GamePlayGround = ({ gainOneScore, isPause, onBlockClick }: GamePlayGroundP
         if (blocks[index] !== null) return
         const newBlocks = [...blocks]
         newBlocks[index] = currentPlayer
-        setCurrentPlayer(currentPlayer === Player.player1 ? Player.player2 : Player.player1)
+
         setBlocks(newBlocks)
         onBlockClick?.(index)
+        if (!player) {
+            setCurrentPlayer(currentPlayer === Player.player1 ? Player.player2 : Player.player1)
+        }
     }
 
+    useEffect(() => {
+        if (player) {
+            setCurrentPlayer(player as Player)
+        }
+    }, [player])
     useEffect(() => {
         const checkWinner = () => {
             for (let i = 0; i < winLines.length; i++) {
