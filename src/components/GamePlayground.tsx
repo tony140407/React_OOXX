@@ -6,8 +6,10 @@ type BlockValue = string | null
 interface GamePlayGroundProps {
     gainOneScore: (winner: Player) => void
     isPause: boolean
+    // 取得被點擊的區塊
+    onBlockClick?: (blockIndex: number) => void
 }
-const GamePlayGround = ({ gainOneScore, isPause }: GamePlayGroundProps) => {
+const GamePlayGround = ({ gainOneScore, isPause, onBlockClick }: GamePlayGroundProps) => {
     const [blocks, setBlocks] = useState<Array<BlockValue>>(Array(9).fill(null))
     const [currentPlayer, setCurrentPlayer] = useState<string>(Player.player1)
     const [winLines, setWinLines] = useState([
@@ -27,6 +29,7 @@ const GamePlayGround = ({ gainOneScore, isPause }: GamePlayGroundProps) => {
         newBlocks[index] = currentPlayer
         setCurrentPlayer(currentPlayer === Player.player1 ? Player.player2 : Player.player1)
         setBlocks(newBlocks)
+        onBlockClick?.(index)
     }
 
     useEffect(() => {

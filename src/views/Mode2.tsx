@@ -6,10 +6,13 @@ const Mode2 = () => {
     const winningCondition = 5
     const [score, setScore] = useState<{ [value in Player]: number }>({ O: 0, X: 0 })
     const [currentPlayGround, setCurrentPlayGround] = useState<number>(4)
+
     function gainOneScore(winner: Player) {
         setScore((prev) => ({ ...prev, [winner]: prev[winner] + 1 }))
     }
-    function changePlayGround() {}
+    const handleBlockClick = (blockId: number) => {
+        setCurrentPlayGround(blockId)
+    }
     useEffect(() => {
         if (winningCondition === score.X || winningCondition === score.O) {
             // TODO: show dialog
@@ -34,6 +37,7 @@ const Mode2 = () => {
                         key={i}
                         isPause={currentPlayGround !== i}
                         gainOneScore={(winner: Player) => gainOneScore(winner)}
+                        onBlockClick={(blockIndex: number) => handleBlockClick(blockIndex)}
                     />
                 ))}
             </section>
